@@ -87,14 +87,20 @@ public class ArrayTests {
         String s = test11(sts);
         System.out.println(s);
     }
-    public String test11(String[] sts) {
-        if (sts.length < 1) {
+    public String test11(String[] strs) {
+        if (null == strs || strs.length == 0) {
             return "";
         }
-        String prefix = sts[0];
-        while (!prefix.equals("")) {
-
+        String baseStr = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            String compareStr = strs[i];
+            while (!compareStr.startsWith(baseStr)) {
+                baseStr = baseStr.substring(0, baseStr.length() - 1);
+                if (baseStr.length() == 0) {
+                    return "";
+                }
+            }
         }
-        return prefix;
+        return baseStr;
     }
 }
