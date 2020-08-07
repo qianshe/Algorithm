@@ -79,11 +79,7 @@ public class ArrayTests {
      */
     @Test
     public void test10() {
-        Scanner scanner = new Scanner(System.in);
-        String[] sts = new String[3];
-        for (int i = 0; i < 3; i++) {
-            sts[i] = scanner.next();
-        }
+        String[] sts = {"asdqwe123","asdqwe12dfg","asdqwe1jh"};
         String s = test11(sts);
         System.out.println(s);
     }
