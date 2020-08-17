@@ -161,6 +161,7 @@ public class ArrayTests {
     @Test
     public void Test4() {
         int[] arr = {2, 5, 1, 6, 3, 4, 7, 3, 2, 1};
+        //要删除的数
         int n = 2;
         System.out.println(arr.length);
         System.out.println(test41(arr, n));
