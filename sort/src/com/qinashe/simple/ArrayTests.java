@@ -235,6 +235,51 @@ public class ArrayTests {
         return arr;
     }
 
+    /*
+        两数之和
+            给定数组nums和一个目标值target，在数组中找出和为目标值的两整数的下标
+     */
+    @Test
+    public void test6() {
+        int[] nums = {2, 4, 5, 6, 7, 11};
+        int target = 10;
+        //暴力解法
+        int[] ints = test61(nums, target);
+        System.out.println(Arrays.toString(ints));
+        //空间换时间
+        int[] ints1 = test62(nums, target);
+        System.out.println(Arrays.toString(ints));
 
+    }
+    //暴力解法
+    public int[] test61(int[] nums,int target) {
+        int[] a = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    a[0] = i;
+                    a[1] = j;
+                    return a;
+                }
+            }
+        }
+        return a;
+    }
 
+    //空间换时间
+    public int[] test62(int[] nums,int target) {
+        int[] a = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i],i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                a[0] = i;
+                a[1] = map.get(target - nums[i]);
+                return a;
+            }
+        }
+        return a;
+    }
 }
