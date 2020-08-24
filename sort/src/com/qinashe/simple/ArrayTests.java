@@ -2,9 +2,7 @@ package com.qinashe.simple;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 与数组相关的简单算法
@@ -301,4 +299,90 @@ public class ArrayTests {
         }
         return a;
     }
+
+    /*
+        三数之和
+        给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，
+        使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+        注意：答案中不可以包含重复的三元组。
+     */
+    @Test
+    public void test7() {
+        int[] nums = {-1,0,1,2,-1,-4};
+        List<List<Integer>> lists = test71(nums);
+        for (List<Integer> list : lists) {
+            Integer[] is = (Integer[]) list.toArray();
+            System.out.println(Arrays.toString(is));
+        }
+    }
+    public List<List<Integer>> test71(int[] nums){
+        Arrays.sort(nums);
+        //准备容器
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            int target = 0 - nums[i];
+            int l = i + 1;
+            int r = nums.length - 1;
+            if (nums[i] > 0) {
+                break;
+            }
+            //跳过当前轮最小的数
+            if (i == 0 || nums[i] != nums[i - 1]) {
+                while (l < r) {
+                    if (nums[l] + nums[r] == target) {
+                        res.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                        //跳过相邻相同的数
+                        while (l < r && nums[l] == nums[l + 1]) l++;
+                        while (l < r && nums[r] == nums[r - 1]) r--;
+                        l++;
+                        r--;
+                    } else if (nums[l] + nums[r] < target) {
+                        l++;
+                    } else r--;
+                }
+            }
+        }
+        return res;
+    }
+
+    /*
+        Z字形变换
+        将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+        比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：
+        L   C   I   R
+        E T O E S I I G
+        E   D   H   N
+        之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："LCIRETOESIIGEDHN"。
+     */
+    @Test
+    public void test8() {
+        String str = "LEETCODEISHIRING";
+        int numRows=5;
+        String s = test81(str, numRows);
+        System.out.println(s);
+    }
+    public String test81(String str, int numRows) {
+        if (numRows==1) return str;
+        String[] arr = new String[numRows];
+        Arrays.fill(arr,"");
+        char[] chars = str.toCharArray();
+        int len = chars.length;
+        //一个周期中遍历的数量
+        int period = numRows * 2 - 2;
+        for (int i = 0; i < len; i++) {
+            int mod = i % period;
+            if (mod < numRows) {//竖排上的字符
+                arr[mod] += chars[i];
+            } else {//竖排中间的字符
+                //从下到上
+                arr[period - mod] += String.valueOf(chars[i]);
+            }
+        }
+        StringBuilder res = new StringBuilder();
+        for (String s : arr) {
+            res.append(s);
+        }
+        return res.toString();
+    }
+
 }
